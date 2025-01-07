@@ -1,17 +1,8 @@
 from turtle import *
-from hangman import *
+from hangman import DrawingHangman
 
 import turtle
-import time
-
-delay = 0.5
-wordbank = ['affix', 'bagpipes', 'bandwagon', 'banjo', 'buffalo',
-            'cobweb', 'croquet', 'daiquiri', 'duplex', 'dwarves',
-            'equip', 'exodus', 'fishhook', 'fixable', 'galaxy',
-            'galvanize', 'ivy', 'juicy', 'kilobyte', 'megahertz',
-            'oxygen', 'polka', 'quiz', 'rhubarb', 'schizophrenia',
-            'unzip', 'uptown', 'vodka', 'whiskey', 'zombie']
-
+import time 
 
 # Set up the screen
 screen = turtle.Screen()
@@ -19,31 +10,34 @@ screen.title("Hangman Game")
 screen.bgcolor("white")
 screen.setup(width=700, height=700)
 
-hangman_word = turtle.Turtle()
-hangman_word.shape("turtle")
-hangman_word.speed(7)
-hangman_word.penup()
+word_turtle = turtle.Turtle()
+figure_turtle = turtle.Turtle()
+game = DrawingHangman()
 
-text = turtle.Turtle()
-text.penup()
-text.goto(0, 150)
-text.write("Let's play Hangman, guess the letters!", None, "center", "16pt")
-text.goto(0, 100)
+# Create game loop
+while not game.terminate:
+  # Set-up the turtle that will be drawing the guessed word
+  word_turtle.shape("turtle")
+  word_turtle.speed(7)
+  word_turtle.penup()
+  word_turtle.goto(-120, -120)
 
-game = DrawingHangman(wordbank)
+  # Set-up the turtle that will be drawing the stick man
+  figure_turtle.penup()
+  figure_turtle.goto(0, 300)
+  figure_turtle.color("blue")
+  figure_turtle.write("Let's play Hangman, guess the letters!", None, "center", font = ("Arial", 20, "bold"))
+  figure_turtle.color("black")
 
-hangman_word.goto(-120, -120)
-game.draw_word(hangman_word)
+  # Play the hangman game
+  game.play_hangman(word_turtle, figure_turtle)
+  
+  # Give player 5 seconds to see the result
+  figure_turtle.goto(0, -50)
+  figure_turtle.write('Wait 5 seconds to play again.', False, align = 'center', font = ("Arial", 10, "normal"))
+  time.sleep(5)
 
-
-while True:
-  guess  = turtle.textinput("Hangman game", "Guess a letter...")
-  if len(guess) > 1 or not guess.isalpha():
-      print("Only single letters are allowed.")
-  guess = guess.lower()
-  game.is_letter_in_secret_word(guess)
-  hangman_word.clear()
-  hangman_word.goto(-120, -120)
-  game.draw_word(hangman_word)
-
-  time.sleep(delay)
+  # Clear the turtles
+  word_turtle.clear()
+  figure_turtle.clear()
+  game = DrawingHangman()
