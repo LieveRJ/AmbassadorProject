@@ -1,14 +1,15 @@
 import random
 import turtle
 import time
+from hangman_graphics import draw_circle, draw_line, draw_cross, write_text
+
+DEFAULT_PEN_COLOR = "black"
 
 # Word bank for the hangman game
-wordbank = ['affix', 'bagpipes', 'bandwagon', 'banjo', 'buffalo',
-            'cobweb', 'croquet', 'daiquiri', 'duplex', 'dwarves',
-            'equip', 'exodus', 'fishhook', 'fixable', 'galaxy',
-            'galvanize', 'ivy', 'juicy', 'kilobyte', 'megahertz',
-            'oxygen', 'polka', 'quiz', 'rhubarb', 'schizophrenia',
-            'unzip', 'uptown', 'vodka', 'whiskey', 'zombie']
+wordbank = [ "apple", "banana", "cherry", "date", "elderberry", \
+            "fig", "grape", "honeydew", "kiwi", "lemon", "mango", \
+            "nectarine", "orange", "papaya", "quince", "raspberry", \
+            "strawberry", "tangerine", "watermelon" ]
 
 class DrawingHangman:
   def __init__ (self):
@@ -104,75 +105,40 @@ class DrawingHangman:
     '''
     Draw the hangman figure.
     For each failed attempt, draw a part of the figure.
+    Use previously written funstions from hangman_graphics.py.
     '''
-
     if self.failed_attempts == 1:
-      # draw gallows
-      figure_turtle.home()
-      figure_turtle.pendown()
-      figure_turtle.left(90)
-      figure_turtle.forward(175)
-      figure_turtle.left(90)
-      figure_turtle.forward(74)
-      figure_turtle.left(90)
-      figure_turtle.forward(35)
-      figure_turtle.penup()
-
+      # Draw base
+      draw_line(0, 0, 100, 0, DEFAULT_PEN_COLOR)
+      
     if self.failed_attempts == 2:
-      # draw head
-      figure_turtle.goto(-74, 140)
-      figure_turtle.pendown()
-      figure_turtle.right(90)
-      figure_turtle.circle(15, None, 100)
-      figure_turtle.penup()
-    elif self.failed_attempts == 3:
-      # draw torso
-      figure_turtle.goto(-74, 140)
-      figure_turtle.pendown()
-      figure_turtle.left(90)
-      figure_turtle.penup()
-      figure_turtle.forward(30)
-      figure_turtle.pendown()
-      figure_turtle.forward(40)
-      figure_turtle.right(180)
-      figure_turtle.forward(30)
-      figure_turtle.penup()
-    elif self.failed_attempts == 4:
-      # draw first arm
-      figure_turtle.goto(-74, 100)
-      figure_turtle.pendown()
-      figure_turtle.left(55)
-      figure_turtle.forward(45)
-      figure_turtle.right(180)
-      figure_turtle.forward(45)
-      figure_turtle.penup()
-    elif self.failed_attempts == 5:
-      # draw second arm
-      figure_turtle.goto(-74, 100)
-      figure_turtle.pendown()
-      figure_turtle.left(70)
-      figure_turtle.forward(45)
-      figure_turtle.right(180)
-      figure_turtle.forward(45)
-      figure_turtle.penup()
-    elif self.failed_attempts == 6:
-      # draw first leg
-      figure_turtle.goto(-74, 100)
-      figure_turtle.pendown()
-      figure_turtle.left(55)
-      figure_turtle.forward(30)
-      figure_turtle.right(30)
-      figure_turtle.forward(60)
-      figure_turtle.right(180)
-      figure_turtle.forward(60)
-      figure_turtle.penup()
-    elif self.failed_attempts == 7:
-      # draw second leg
-      figure_turtle.goto(-74, 70)
-      figure_turtle.pendown()
-      figure_turtle.right(120)
-      figure_turtle.forward(60)
-      figure_turtle.penup()
+      # Draw pole
+      draw_line(10, 0, 10, 100, DEFAULT_PEN_COLOR)
+
+    if self.failed_attempts == 3:
+      # Draw top
+      draw_line(10, 100, 50, 100, DEFAULT_PEN_COLOR)
+    if self.failed_attempts == 4:
+      # Draw rope
+      draw_line(50, 100, 50, 80, DEFAULT_PEN_COLOR)
+    if self.failed_attempts == 5:
+      # Draw head
+      draw_circle(50, 70, 10, DEFAULT_PEN_COLOR)
+    if self.failed_attempts == 6:
+      # Draw body
+      draw_line(50, 60, 50, 30, DEFAULT_PEN_COLOR)
+    if self.failed_attempts == 7:
+      # Draw hands
+      draw_line(50, 50, 40, 40, DEFAULT_PEN_COLOR)
+      draw_line(50, 50, 60, 40, DEFAULT_PEN_COLOR)
+    if self.failed_attempts == 8:
+      # Draw legs
+      draw_line(50, 30, 40, 20, DEFAULT_PEN_COLOR)
+      draw_line(50, 30, 60, 20, DEFAULT_PEN_COLOR)
+    if self.failed_attempts == 9:
+      # Draw eyes
+      draw_cross(45, 72, 2, DEFAULT_PEN_COLOR)
+      draw_cross(52, 72, 2, DEFAULT_PEN_COLOR)
 
   def play_hangman(self, word_turtle, figure_turtle, delay = 0.5):
     '''
@@ -191,8 +157,8 @@ class DrawingHangman:
     # Start with empty word
     self.draw_word(word_turtle)
 
-    # Check if the word is guessed or failed attempts reach 8
-    while not self.is_word_guessed() and self.failed_attempts < 8:
+    # Check if the word is guessed or failed attempts reach 10
+    while not self.is_word_guessed() and self.failed_attempts < 10:
       guess = turtle.textinput("Hangman game", "Guess a letter...")
       
       # The player can only guess a single letter
@@ -220,3 +186,46 @@ class DrawingHangman:
       figure_turtle.color('red')
       figure_turtle.write('Sorry, you lose :(', False, align = 'center', font = ("Arial", 30, "normal"))
       figure_turtle.color('black')
+
+
+def main():
+  # Set up the screen
+  screen = turtle.Screen()
+  screen.title("Hangman Game")
+  screen.bgcolor("white")
+  screen.setup(width=700, height=700)
+
+  word_turtle = turtle.Turtle()
+  figure_turtle = turtle.Turtle()
+  game = DrawingHangman()
+
+  # Create game loop
+  while not game.terminate:
+    # Set-up the turtle that will be drawing the guessed word
+    word_turtle.shape("turtle")
+    word_turtle.speed(7)
+    word_turtle.penup()
+    word_turtle.goto(-120, -120)
+
+    # Set-up the turtle that will be drawing the stick man
+    figure_turtle.penup()
+    figure_turtle.goto(0, 300)
+    figure_turtle.color("blue")
+    figure_turtle.write("Let's play Hangman, guess the letters!", None, "center", font = ("Arial", 20, "bold"))
+    figure_turtle.color("black")
+
+    # Play the hangman game
+    game.play_hangman(word_turtle, figure_turtle)
+    
+    # Give player 5 seconds to see the result
+    figure_turtle.goto(0, -50)
+    figure_turtle.write('Wait 5 seconds to play again.', False, align = 'center', font = ("Arial", 10, "normal"))
+    time.sleep(5)
+
+    # Clear the turtles
+    word_turtle.clear()
+    figure_turtle.clear()
+    game = DrawingHangman()
+
+if __name__ == "__main__":
+  main()
