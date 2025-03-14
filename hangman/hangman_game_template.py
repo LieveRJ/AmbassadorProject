@@ -6,8 +6,6 @@ from hangman_graphics import draw_circle, draw_line, draw_cross, write_text
 DEFAULT_PEN_COLOR = "black"
 
 # TODO: Fill in word bank for the hangman game
-#
-# Hint: For example: wordbank = [ "apple", "banana", "cherry"]
 wordbank = [  ]
 
 class DrawingHangman:
@@ -56,8 +54,6 @@ class DrawingHangman:
     
     # TODO: Check if the guessed letter is in the secret word
     # otherwise increment the failed attempts
-    #
-    # Hint: use self.secret_word and self.failed_attempts
     pass
 
   def draw_word (self, word_turtle):
@@ -140,7 +136,7 @@ class DrawingHangman:
     while not self.is_word_guessed() and self.failed_attempts < 10:
       guess = turtle.textinput("Hangman game", "Guess a letter...")
       
-      # EXTRA TODO: Verify the player guessed a letter
+      # EXTRA TODO: Verify the player's guess was only one letter
 
       # Check if the guessed letter is in the secret word
       guess = guess.lower()
