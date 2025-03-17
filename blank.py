@@ -76,6 +76,7 @@ def update_score():
     pen.write('Score: {} High Score: {}'.format(score, high_score), align='center', font = ('Courier', 24, 'normal'))
 
 # Functions that move snake in response to keyboard keys
+# Hint: look at the collision function and "KeyBoard Bindings" section to see what may be used in these functions
 def go_up():
     if ... != ... :
         ...
@@ -180,3 +181,8 @@ while True:
 
 # Makes the window visible and runs everything
 wn.mainloop()
+
+
+# Are you done with the basic implementation? 
+# See if you can make the snake change colours every time you eat an apple! 
+# Or try changing parts of the code to make the game more difficult
