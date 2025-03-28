@@ -10,7 +10,7 @@ import random
 # Score and delay
 score = 0
 high_score = 0
-delay = 0.1
+delay = 0.05
 
 
 # Set up the screen
@@ -79,12 +79,15 @@ def update_score():
 def go_up():
     if head.direction != 'down':
         head.direction = 'up'
+
 def go_down():
     if head.direction != 'up':
         head.direction = 'down'
+
 def go_left():
     if head.direction != 'right':
         head.direction = 'left'
+
 def go_right():
     if head.direction != 'left':
         head.direction = 'right'
@@ -96,11 +99,13 @@ def move():
         x = segments[index-1].xcor()
         y = segments[index-1].ycor()
         segments[index].goto(x,y)
+
     # Move segment 0 to the head
     if len(segments) > 0:
         x = head.xcor()
         y = head.ycor()
         segments[0].goto(x,y)
+
     # Keep the snake moving in the same direction
     if head.direction == 'up':
         head.sety(head.ycor() + 10)
@@ -113,6 +118,8 @@ def move():
 
 # Function that tells the game what to do when collision occurs
 def collision():
+    global score, delay, high_score # Ignore this line
+
     time.sleep(0.5)
     head.goto(0,0)
     head.direction = 'stop'
