@@ -15,8 +15,6 @@ delay = 0.05
 
 # Set up the screen
 wn = turtle.Screen()
-wn.title('Snake Game')
-wn.bgcolor("black")
 wn.setup(width=700, height=700)
 wn.tracer(0)  # Turns off screen updates
 
@@ -24,7 +22,7 @@ wn.tracer(0)  # Turns off screen updates
 pencil = turtle.Turtle()
 pencil.speed(0)
 pencil.shape('circle')
-pencil.color('white')
+pencil.color('black')
 pencil.penup()
 pencil.hideturtle()
 pencil.goto(310,310)
@@ -63,7 +61,7 @@ segments = []
 pen = turtle.Turtle()
 pen.speed(0)
 pen.shape('circle')
-pen.color('white')
+pen.color('black')
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 310)
@@ -118,7 +116,7 @@ def move():
 
 # Function that tells the game what to do when collision occurs
 def collision():
-    global score, delay, high_score # Ignore this line
+    global score, delay, high_score, segments # Ignore this line
 
     time.sleep(0.5)
     head.goto(0,0)
@@ -127,18 +125,18 @@ def collision():
     for segment in segments:
         segment.hideturtle()
     # Clear the segments list
-    segments.clear()
+    segments = []
     score = 0
     update_score()
     # Reset the delay
-    delay = 0.1
+    delay = 0.05
 
 ### Keyboard bindings
 wn.listen()
-wn.onkeypress(go_up, 'Up')
-wn.onkeypress(go_down, 'Down')
-wn.onkeypress(go_left, 'Left')
-wn.onkeypress(go_right, 'Right')
+wn.onkey(go_up, 'Up')
+wn.onkey(go_down, 'Down')
+wn.onkey(go_left, 'Left')
+wn.onkey(go_right, 'Right')
 
 ### Loop that runs the game code
 while True:
