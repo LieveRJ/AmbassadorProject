@@ -9,13 +9,12 @@ turtle.shape('turtle')
 
 DEFAULT_PEN_COLOR = "black"
 
-def draw_circle(x, y, radius, pen_color):
-    # TODO: Draw a circle with the given parameters using turtle graphics
-    pass
-
-
 def draw_line(start_x, start_y, end_x, end_y, pen_color):
     # TODO: Draw a line with the given parameters using turtle graphics
+    pass
+
+def draw_circle(x, y, radius, pen_color):
+    # TODO: Draw a circle with the given parameters using turtle graphics
     pass
 
 def draw_cross(center_x, center_y: int, size: int, pen_color):
@@ -23,7 +22,7 @@ def draw_cross(center_x, center_y: int, size: int, pen_color):
     pass
 
 def write_text(start_x: int, start_y, text):
-    # TODO: Write the given text at the given position using turtle graphics
+    # TODO: Write the given text at the given position using turtle graphics (EXTRA)
     # Return the turtle object that writes the text
     pass
 
@@ -61,12 +60,12 @@ def main():
 
     turtle.hideturtle()
 
-    # TODO: Write hello world
+    # TODO: Write hello world (Extra)
     # text = write_text(, , )
     # time.sleep(2)
     # text.clear()
 
-    # TODO: Write goodbye world
+    # TODO: Write goodbye world (Extra)
     # text = write_text(, , )
     # time.sleep(2)
     # text.clear()

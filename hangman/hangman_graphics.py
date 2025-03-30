@@ -25,12 +25,12 @@ def draw_line(start_x, start_y, end_x, end_y, pen_color):
     turtle.goto(end_x, end_y)
 
 
-def draw_cross(center_x, center_y: int, size: int, pen_color):
+def draw_cross(center_x, center_y, size, pen_color):
     draw_line(center_x, center_y, center_x + size, center_y + size, pen_color)
     draw_line(center_x + size, center_y, center_x, center_y + size, pen_color)
 
 
-def write_text(start_x: int, start_y, text) -> turtle.Turtle:
+def write_text(start_x, start_y, text):
     erasable_text = turtle.Turtle()
     erasable_text.penup()
     erasable_text.setpos(start_x, start_y)

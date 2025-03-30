@@ -10,13 +10,11 @@ import random
 # Score and delay
 score = 0
 high_score = 0
-delay = 0.1
+delay = 0.05
 
 
 # Set up the screen
 wn = turtle.Screen()
-wn.title('Snake Game')
-wn.bgcolor("black")
 wn.setup(width=700, height=700)
 wn.tracer(0)  # Turns off screen updates
 
@@ -24,7 +22,7 @@ wn.tracer(0)  # Turns off screen updates
 pencil = turtle.Turtle()
 pencil.speed(0)
 pencil.shape('circle')
-pencil.color('white')
+pencil.color('black')
 pencil.penup()
 pencil.hideturtle()
 pencil.goto(310,310)
@@ -63,7 +61,7 @@ segments = []
 pen = turtle.Turtle()
 pen.speed(0)
 pen.shape('circle')
-pen.color('white')
+pen.color('black')
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 310)
@@ -79,12 +77,15 @@ def update_score():
 def go_up():
     if head.direction != 'down':
         head.direction = 'up'
+
 def go_down():
     if head.direction != 'up':
         head.direction = 'down'
+
 def go_left():
     if head.direction != 'right':
         head.direction = 'left'
+
 def go_right():
     if head.direction != 'left':
         head.direction = 'right'
@@ -96,11 +97,13 @@ def move():
         x = segments[index-1].xcor()
         y = segments[index-1].ycor()
         segments[index].goto(x,y)
+
     # Move segment 0 to the head
     if len(segments) > 0:
         x = head.xcor()
         y = head.ycor()
         segments[0].goto(x,y)
+
     # Keep the snake moving in the same direction
     if head.direction == 'up':
         head.sety(head.ycor() + 10)
@@ -113,6 +116,8 @@ def move():
 
 # Function that tells the game what to do when collision occurs
 def collision():
+    global score, delay, high_score, segments # Ignore this line
+
     time.sleep(0.5)
     head.goto(0,0)
     head.direction = 'stop'
@@ -120,18 +125,18 @@ def collision():
     for segment in segments:
         segment.hideturtle()
     # Clear the segments list
-    segments.clear()
+    segments = []
     score = 0
     update_score()
     # Reset the delay
-    delay = 0.1
+    delay = 0.05
 
 ### Keyboard bindings
 wn.listen()
-wn.onkeypress(go_up, 'Up')
-wn.onkeypress(go_down, 'Down')
-wn.onkeypress(go_left, 'Left')
-wn.onkeypress(go_right, 'Right')
+wn.onkey(go_up, 'Up')
+wn.onkey(go_down, 'Down')
+wn.onkey(go_left, 'Left')
+wn.onkey(go_right, 'Right')
 
 ### Loop that runs the game code
 while True:
